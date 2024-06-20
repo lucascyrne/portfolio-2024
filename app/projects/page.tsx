@@ -28,7 +28,7 @@ const Work = () => {
           <div className='relative reveal-area lg:w-1/2 lg:min-h-full'>
             <div className='absolute inset-0 flex items-center justify-center reveal-hidden bg-primary'>
               <h3 className='font-inria text-2xl text-white italic under text-center'>
-                Still working on this video...
+                There&apos;s much more!
               </h3>
             </div>
             <div className='flex items-center justify-center w-full h-56 lg:min-h-full reveal-visible'>

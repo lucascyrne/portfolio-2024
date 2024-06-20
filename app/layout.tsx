@@ -1,9 +1,10 @@
 'use client';
 
-// import 'tailwindcss/tailwind.css';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { MusicProvider } from './context/musicContext';
+import Head from 'next/head';
+import { useEffect } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -12,8 +13,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  useEffect(() => {
+    document.title = 'Horizonte Studios | Official Homepage';
+  }, []);
+
   return (
     <html lang='en'>
+      <Head>
+        <meta
+          name='description'
+          content="Horizonte studio's digital portfolio, made by Lucas Cyrne Ferreira"
+        />
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
+      </Head>
       <body className={inter.className}>
         <MusicProvider>{children}</MusicProvider>
       </body>

@@ -111,165 +111,37 @@ const AboutMe = () => {
               Fullstack Developer
             </p>
             <p className='relative text-center text-shadow'>
-              <span className='absolute -top-[10px] left-12 md:left-[26px] lg:left-[1px] text-sm font-semibold'>
+              <span className='absolute -top-[10px] left-8 md:left-[26px] lg:left-[1px] text-sm font-semibold'>
                 Level
               </span>
               5yrs of professional development
             </p>
 
             <div className='flex flex-col items-center justify-center'>
-              <div>
-                <ul className='flex flex-grow flex-wrap items-center justify-center mt-4 w-72 lg:mt-0 lg:w-full gap-6 gap-y-4'>
-                  <li
-                    className='flex items-center gap-4 text-lg'
-                    data-tooltip-id='strength-tooltip'
+              <ul className='flex w-full gap-x-4 mt-2'>
+                <li className='flex items-center gap-2 text-[14px]'>
+                  <FaGithub />
+                  <Link href={'https://github.com/lucascyrne'} target='_blank'>
+                    Github
+                  </Link>
+                </li>
+                <li className='flex items-center gap-2 text-[14px]'>
+                  <FaLinkedin />
+                  <Link
+                    href={'https://www.linkedin.com/in/lucas-cyrne-8b8314153/'}
+                    target='_blank'
                   >
-                    <GiStrong />
-                    18
-                  </li>
-                  <li
-                    className='flex items-center gap-4 text-lg'
-                    data-tooltip-id='dexterity-tooltip'
-                  >
-                    <GiRun />
-                    20
-                  </li>
-                  <li
-                    className='flex items-center gap-4 text-lg'
-                    data-tooltip-id='constitution-tooltip'
-                  >
-                    <FaHeart />
-                    17
-                  </li>
-                  <li
-                    className='flex items-center gap-4 text-lg'
-                    data-tooltip-id='wisdom-tooltip'
-                  >
-                    <FaHatWizard />
-                    24
-                  </li>
-                  <li
-                    className='flex items-center gap-4 text-lg'
-                    data-tooltip-id='intelligence-tooltip'
-                  >
-                    <FaBrain />
-                    21
-                  </li>
-                  <li
-                    className='flex items-center gap-4 text-lg'
-                    data-tooltip-id='charisma-tooltip'
-                  >
-                    <FaSmile />
-                    20
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <ul className='flex w-full gap-x-4 mt-12 lg:mt-8'>
-                  <li className='flex items-center gap-2 text-[14px]'>
-                    <FaGithub />
-                    <Link
-                      href={'https://github.com/lucascyrne'}
-                      target='_blank'
-                    >
-                      Github
-                    </Link>
-                  </li>
-                  <li className='flex items-center gap-2 text-[14px]'>
-                    <FaLinkedin />
-                    <Link
-                      href={
-                        'https://www.linkedin.com/in/lucas-cyrne-8b8314153/'
-                      }
-                      target='_blank'
-                    >
-                      Linkedin
-                    </Link>
-                  </li>
-                  <li className='flex items-center gap-2 text-[14px]'>
-                    <PiCertificateFill />
-                    <Link href={'https://read.cv/lucascyrne'} target='_blank'>
-                      Resume
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+                    Linkedin
+                  </Link>
+                </li>
+                <li className='flex items-center gap-2 text-[14px]'>
+                  <PiCertificateFill />
+                  <Link href={'https://read.cv/lucascyrne'} target='_blank'>
+                    Resume
+                  </Link>
+                </li>
+              </ul>
             </div>
-
-            <ReactTooltip
-              id='strength-tooltip'
-              className='font-inter'
-              style={{
-                fontSize: '12px',
-              }}
-              place='top'
-            >
-              <p>Strength to face complex development challenges.</p>
-              <p>Ability to solve difficult problems with robust solutions.</p>
-            </ReactTooltip>
-            <ReactTooltip
-              id='dexterity-tooltip'
-              className='font-inter'
-              style={{
-                fontSize: '12px',
-              }}
-              place='top'
-            >
-              <p>Ability to write clean and efficient code.</p>
-              <p>Agility to adapt to new technologies and frameworks.</p>
-            </ReactTooltip>
-            <ReactTooltip
-              id='constitution-tooltip'
-              className='font-inter'
-              style={{
-                fontSize: '12px',
-              }}
-              place='top'
-            >
-              <p>
-                Resistance to dealing with long working hours and deadlines
-                tight.
-              </p>
-              <p>Ability to maintain quality of work under pressure.</p>
-            </ReactTooltip>
-            <ReactTooltip
-              id='wisdom-tooltip'
-              className='font-inter'
-              style={{
-                fontSize: '12px',
-              }}
-              place='top'
-            >
-              <p>Wisdom to make smart architectural decisions.</p>
-              <p>In-depth knowledge to guide the team towards right goals.</p>
-            </ReactTooltip>
-            <ReactTooltip
-              id='intelligence-tooltip'
-              className='font-inter'
-              style={{
-                fontSize: '12px',
-              }}
-              place='top'
-            >
-              <p>Intelligence to learn and apply new concepts quickly.</p>
-              <p>
-                Ability to solve complex problems with solutions innovative.
-              </p>
-            </ReactTooltip>
-            <ReactTooltip
-              id='charisma-tooltip'
-              className='font-inter'
-              style={{
-                fontSize: '12px',
-              }}
-              place='top'
-            >
-              <p>
-                Charisma to collaborate effectively with colleagues and clients.
-              </p>
-              <p>Ability to influence and inspire the team development.</p>
-            </ReactTooltip>
           </div>
         </div>
 
@@ -278,7 +150,7 @@ const AboutMe = () => {
             <Image
               src={Lucas}
               alt={'An alt caption'}
-              className='relative -left-[400px] lg:-left-[620px] -top-[240px] lg:-top-[450px] min-w-[275%]'
+              className='relative -left-[400px] lg:-left-[680px] -top-[240px] lg:-top-[500px] min-w-[275%]'
             />
           </div>
         </div>

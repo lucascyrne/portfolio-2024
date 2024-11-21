@@ -1,9 +1,9 @@
 'use client';
 
-import Footer from '../components/core/Footer';
-import Header from '../components/core/Header';
-import useCustomCursor from '../helpers/hooks/useCustomCursor';
-import useRevealText from '../helpers/hooks/useRevealText';
+import Footer from '../../components/core/Footer';
+import Header from '../../components/core/Header';
+import useCustomCursor from '../../helpers/hooks/useCustomCursor';
+import useRevealText from '../../helpers/hooks/useRevealText';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 

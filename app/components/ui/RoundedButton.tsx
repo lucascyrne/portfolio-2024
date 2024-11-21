@@ -1,8 +1,8 @@
 'use client';
 
-import { useMusic } from '@/app/context/musicContext';
+import { useMusic } from '@/app/context/music-context';
 import useButtonAnimation from '@/app/helpers/hooks/useButtonAnimation';
-import { FC, ReactNode, useEffect, useRef, useState } from 'react';
+import { FC, ReactNode, useRef } from 'react';
 
 type RoundedButtonProps = {
   icon?: ReactNode;
@@ -12,19 +12,17 @@ type RoundedButtonProps = {
 
 const RoundedButton: FC<RoundedButtonProps> = ({ icon, onClick, isMusic }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const iconRef = useRef<HTMLSpanElement>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
   const { isPlaying, togglePlayPause } = useMusic();
 
   useButtonAnimation({
     buttonRef,
-    iconRef,
     hoverBgColor: '#DA5D74',
     defaultBgColor: '#B65466',
   });
 
   const handleClick = () => {
     if (isMusic) {
+      console.log('RoundedButton: Interagindo com o botão de música.');
       togglePlayPause();
     }
     if (onClick) {
@@ -32,19 +30,15 @@ const RoundedButton: FC<RoundedButtonProps> = ({ icon, onClick, isMusic }) => {
     }
   };
 
-  useEffect(() => {
-    console.log(isPlaying);
-  }, [isPlaying]);
-
-  if (isMusic)
-    return (
-      <button
-        ref={buttonRef}
-        className={`flex items-center justify-center w-10 h-10 rounded-full bg-secondary shadow-sm ${
-          isPlaying ? 'animate-wave' : ''
-        }`}
-        onClick={handleClick}
-      >
+  return (
+    <button
+      ref={buttonRef}
+      className={`flex items-center justify-center w-10 h-10 rounded-full bg-secondary shadow-sm ${
+        isMusic && isPlaying ? 'animate-wave' : ''
+      }`}
+      onClick={handleClick}
+    >
+      {isMusic ? (
         <div
           className={`flex relative items-center justify-center p-2 w-full h-full ${
             isPlaying ? 'animate-wave' : ''
@@ -57,63 +51,25 @@ const RoundedButton: FC<RoundedButtonProps> = ({ icon, onClick, isMusic }) => {
             xmlns='http://www.w3.org/2000/svg'
             className={'rotate-180'}
           >
-            <rect
-              className={`${isPlaying ? 'bar bar1' : ''}`}
-              x='3'
-              y='4'
-              width='2'
-              height='6'
-              fill='#000000'
-            />
-            <rect
-              className={`${isPlaying ? 'bar bar2' : ''}`}
-              x='7'
-              y='4'
-              width='2'
-              height='12'
-              fill='#000000'
-            />
-            <rect
-              className={`${isPlaying ? 'bar bar3' : ''}`}
-              x='11'
-              y='4'
-              width='2'
-              height='10'
-              fill='#000000'
-            />
-            <rect
-              className={`${isPlaying ? 'bar bar4' : ''}`}
-              x='15'
-              y='4'
-              width='2'
-              height='14'
-              fill='#000000'
-            />
-            <rect
-              className={`${isPlaying ? 'bar bar5' : ''}`}
-              x='19'
-              y='4'
-              width='2'
-              height='8'
-              fill='#000000'
-            />
+            {[...Array(5)].map((_, index) => (
+              <rect
+                key={index}
+                className={`${isPlaying ? `bar bar${index + 1}` : ''}`}
+                x={3 + index * 4}
+                y='4'
+                width='2'
+                height={6 + index * 2}
+                fill='#000000'
+              />
+            ))}
           </svg>
         </div>
-        <audio ref={audioRef} src='/assets/mp3/song.mp3' loop />
-      </button>
-    );
-
-  return (
-    <button
-      ref={buttonRef}
-      className={
-        'flex items-center justify-center w-10 h-10 rounded-full bg-secondary shadow-sm'
-      }
-      onClick={handleClick}
-    >
-      {icon}
+      ) : (
+        icon
+      )}
     </button>
   );
 };
+
 
 export default RoundedButton;

@@ -2,7 +2,7 @@
 
 import './globals.css';
 import { Inter } from 'next/font/google';
-import { MusicProvider } from './context/musicContext';
+import { MusicProvider } from './context/music-context';
 import Head from 'next/head';
 import { useEffect } from 'react';
 

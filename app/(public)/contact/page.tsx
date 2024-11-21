@@ -1,9 +1,8 @@
 'use client';
 
-import Footer from '../components/core/Footer';
-import Header from '../components/core/Header';
-import AboutMe from '../components/ui/AboutMe';
-import ContactForm from '../components/ui/ContactForm';
+import Footer from "@/app/components/core/Footer";
+import Header from "@/app/components/core/Header";
+import AboutMe from "@/app/components/ui/AboutMe";
 
 const Contact = () => {
   return (

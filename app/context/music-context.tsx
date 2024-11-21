@@ -118,7 +118,7 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
   return (
     <MusicContext.Provider value={{ isPlaying, togglePlayPause, audioRef, analyser }}>
       {children}
-      <audio ref={audioRef} src='assets/mp3/song.mp3' loop />
+      <audio ref={audioRef} src='assets/mp3/portfolio-song-final.mp3' loop />
     </MusicContext.Provider>
   );
 };

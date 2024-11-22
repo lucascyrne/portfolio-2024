@@ -7,11 +7,11 @@ import useRevealText from '../../helpers/hooks/useRevealText';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
-import Gowdock from '@/public/assets/icons/gowdock_logo.svg';
-import NovoAtacarejo from '@/public/assets/icons/novo_atacarejo_logo.svg';
-import LucidDreams from '@/public/assets/icons/lucid_dreams_logo.svg';
-import GeniusLine from '@/public/assets/icons/geniusline_icon.svg';
-import Lovepay from '@/public/assets/icons/lovepay_icon.svg';
+import Gowdock from '@/public/assets/icons/gowdock-logo.svg';
+import NovoAtacarejo from '@/public/assets/icons/novo-atacarejo-logo.svg';
+import LucidDreams from '@/public/assets/icons/lucid-dreams-logo.svg';
+import GeniusLine from '@/public/assets/icons/geniusline-icon.svg';
+import Lovepay from '@/public/assets/icons/lovepay-icon.svg';
 
 const Work = () => {
   const partners = [Gowdock, NovoAtacarejo, LucidDreams, GeniusLine, Lovepay];

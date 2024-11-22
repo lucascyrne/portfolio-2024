@@ -10,7 +10,7 @@ type UseButtonAnimationProps = {
   defaultIconRotation?: number;
 };
 
-const useButtonAnimation = ({
+const usePrimaryButtonAnimation = ({
   buttonRef,
   iconRef,
   hoverBgColor = '#DA5D74',
@@ -40,4 +40,4 @@ const useButtonAnimation = ({
   }, [buttonRef, iconRef, hoverBgColor, defaultBgColor]);
 };
 
-export default useButtonAnimation;
+export default usePrimaryButtonAnimation;

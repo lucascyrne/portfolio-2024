@@ -2,9 +2,9 @@
 
 import './globals.css';
 import { Inter } from 'next/font/google';
-import { MusicProvider } from './context/music-context';
 import Head from 'next/head';
 import { useEffect } from 'react';
+import { MusicProvider } from './context/music-context';
 
 const inter = Inter({ subsets: ['latin'] });
 

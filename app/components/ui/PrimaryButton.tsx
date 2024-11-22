@@ -1,8 +1,8 @@
 'use client';
 
-import { FC, ReactNode, useRef, useEffect } from 'react';
+import { FC, ReactNode, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import useButtonAnimation from '@/app/helpers/hooks/useButtonAnimation';
+import usePrimaryButtonAnimation from '@/app/helpers/hooks/useButtonAnimation';
 import { animatePageOut } from '@/app/helpers/ui/animations';
 
 type PrimaryButtonProps = {
@@ -22,10 +22,10 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const iconRef = useRef<HTMLSpanElement>(null);
 
-  useButtonAnimation({
+  usePrimaryButtonAnimation({
     buttonRef,
     iconRef,
-    hoverBgColor: '#DA5D74',
+    hoverBgColor: '#E06A7F',
     defaultBgColor: '#B65466',
   });
 
@@ -39,7 +39,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
   return (
     <button
       ref={buttonRef}
-      className='flex items-center justify-center px-6 py-3 gap-2 bg-primary shadow-text rounded-full hover:shadow-md'
+      className='flex items-center justify-center px-6 py-3 gap-2 bg-primary rounded-full shadow-sm hover:shadow-md'
       onClick={handleClick}
     >
       {value}

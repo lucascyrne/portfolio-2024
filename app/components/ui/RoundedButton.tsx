@@ -3,6 +3,7 @@
 import { useMusic } from '@/app/context/music-context';
 import useButtonAnimation from '@/app/helpers/hooks/useButtonAnimation';
 import { FC, ReactNode, useRef } from 'react';
+import { ClipLoader } from 'react-spinners';
 
 type RoundedButtonProps = {
   icon?: ReactNode;
@@ -12,7 +13,7 @@ type RoundedButtonProps = {
 
 const RoundedButton: FC<RoundedButtonProps> = ({ icon, onClick, isMusic }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const { isPlaying, togglePlayPause } = useMusic();
+  const { loading, isPlaying, togglePlayPause } = useMusic();
 
   useButtonAnimation({
     buttonRef,
@@ -37,8 +38,14 @@ const RoundedButton: FC<RoundedButtonProps> = ({ icon, onClick, isMusic }) => {
         isMusic && isPlaying ? 'animate-wave' : ''
       }`}
       onClick={handleClick}
-    >
-      {isMusic ? (
+    >{
+      loading.initializeAudioContext || loading.togglePlayPause ? (
+        <span className='text-sm flex items-center justify-center'>
+          <ClipLoader size={22} />
+        </span>
+      ) : (
+        <>
+        {isMusic ? (
         <div
           className={`flex relative items-center justify-center p-2 w-full h-full ${
             isPlaying ? 'animate-wave' : ''
@@ -67,6 +74,10 @@ const RoundedButton: FC<RoundedButtonProps> = ({ icon, onClick, isMusic }) => {
       ) : (
         icon
       )}
+        </>
+      )
+    }
+      
     </button>
   );
 };

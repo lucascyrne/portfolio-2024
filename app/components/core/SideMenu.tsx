@@ -82,34 +82,34 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, onClose }) => {
       </div>
       <nav className='flex flex-col items-start justify-star mt-16'>
         <button
-          className='flex items-start relative px-4 py-2 w-full text-xl font-normal text-white overflow-hidden'
+          className='flex items-start relative px-4 py-2 w-full text-xl font-normal text-white overflow-hidden hover:bg-primary-dark transition-all duration-300'
           onClick={() => handleNavigate('/')}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <span className='relative top-1 mr-[2px] align-top text-sm'>01</span>
-          <span className='text relative'>Home</span>
-          <span className='underline absolute left-0 bottom-0 h-[2px] w-full bg-white transform scale-x-0 origin-left'></span>
+          <span className='relative top-1 mr-[2px] align-top text-xsm'>01</span>
+          <span className='font-inria text relative'>Home</span>
+          <span className='underline absolute left-0 bottom-0 h-[1px] w-full bg-white transform scale-x-0 origin-left'></span>
         </button>
         <button
-          className='flex items-start relative px-4 py-2 w-full text-xl font-normal text-white overflow-hidden'
+          className='flex items-start relative px-4 py-2 w-full text-xl font-normal text-white overflow-hidden hover:bg-primary-dark transition-all duration-300'
           onClick={() => handleNavigate('/projects')}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <span className='relative top-1 mr-[2px] align-top text-sm'>02</span>
-          <span className='text relative'>Projects</span>
-          <span className='underline absolute left-0 bottom-0 h-[2px] w-full bg-white transform scale-x-0 origin-left'></span>
+          <span className='relative top-1 mr-[2px] align-top text-xsm'>02</span>
+          <span className='font-inria text relative'>Projects</span>
+          <span className='underline absolute left-0 bottom-0 h-[1px] w-full bg-white transform scale-x-0 origin-left'></span>
         </button>
         <button
-          className='flex items-start relative px-4 py-2 w-full text-xl font-normal text-white overflow-hidden'
+          className='flex items-start relative px-4 py-2 w-full text-xl font-normal text-white overflow-hidden hover:bg-primary-dark transition-all duration-300'
           onClick={() => handleNavigate('/contact')}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <span className='relative top-1 mr-[2px] align-top text-sm'>03</span>
-          <span className='text relative'>Contact</span>
-          <span className='underline absolute left-0 bottom-0 h-[2px] w-full bg-white transform scale-x-0 origin-left'></span>
+          <span className='relative top-1 mr-[2px] align-top text-xsm'>03</span>
+          <span className='font-inria text relative'>Contact</span>
+          <span className='underline absolute left-0 bottom-0 h-[1px] w-full bg-white transform scale-x-0 origin-left'></span>
         </button>
       </nav>
     </div>

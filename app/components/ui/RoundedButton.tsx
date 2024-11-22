@@ -39,7 +39,7 @@ const RoundedButton: FC<RoundedButtonProps> = ({ icon, onClick, isMusic }) => {
       }`}
       onClick={handleClick}
     >{
-      loading.initializeAudioContext || loading.togglePlayPause ? (
+      (loading.initializeAudioContext || loading.togglePlayPause) && isMusic ? (
         <span className='text-sm flex items-center justify-center'>
           <ClipLoader size={22} />
         </span>

@@ -22,7 +22,7 @@ const SecretButton: React.FC<SecretButtonProps> = ({ onClick }) => {
       {/* Ícone centralizado no estado colapsado */}
       <span
         className={`flex items-center justify-center transition-all duration-500 ease-in-out
-          ${isExpanded ? "translate-x-0 mr-2" : "translate-x-[12px]"} z-20 text-primary
+          ${isExpanded ? "translate-x-0 mr-2" : "translate-x-[12px]"} text-primary
         `}
       >
         <TfiWorld className="text-lg" />
@@ -32,7 +32,7 @@ const SecretButton: React.FC<SecretButtonProps> = ({ onClick }) => {
       <span
         className={`flex items-center justify-center whitespace-nowrap font-medium
           transition-opacity duration-300 ease-in-out
-          ${isExpanded ? "opacity-100" : "opacity-0"} z-20 text-primary
+          ${isExpanded ? "opacity-100" : "opacity-0"} text-primary
         `}
       >
         A bit about me

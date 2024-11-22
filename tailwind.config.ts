@@ -30,6 +30,20 @@ const config: Config = {
         '3xl': ['3.157rem', { lineHeight: '1.5' }],
         '4xl': ['4.209rem', { lineHeight: '1.5' }],
       },
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'fade-out': {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+      },
+      animation: {
+        'fade-in': 'fade-in 1.6s ease-in-out',
+        'fade-out': 'fade-out 1.6s ease-in-out',
+      },
     },
   },
   plugins: [],

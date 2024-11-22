@@ -14,7 +14,7 @@ const Header = () => {
   const openMenu = () => setIsOpen(!isOpen);
 
   return (
-    <section className='flex relative py-2 px-2 w-full bg-transparent'>
+    <section className='flex relative py-2 px-2 w-full bg-transparent z-40'>
       <nav className='flex items-center justify-between w-full'>
         <span className='w-10 h-10' />
         <h3 className='flex items-center justify-start font-semibold cursor-pointer' onClick={() => push('/')}>

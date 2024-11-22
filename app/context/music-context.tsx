@@ -127,25 +127,12 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
   
       // Aguarda o áudio estar pronto para tocar
       nextAudio.oncanplay = async () => {
-        nextAudio.volume = 0;
-        await nextAudio.play();
-  
-        const fadeDuration = 3000;
-        const startTime = Date.now();
-  
-        const fade = setInterval(() => {
-          const elapsed = Date.now() - startTime;
-          currentAudio.volume = Math.max(1 - elapsed / fadeDuration, 0);
-          nextAudio.volume = Math.min(elapsed / fadeDuration, 1);
-  
-          if (elapsed >= fadeDuration) {
-            clearInterval(fade);
-            currentAudio.pause();
-            setActiveAudio(activeAudio === 1 ? 2 : 1);
-            setIsPlaying(true);
-            toggleLoading('togglePlayPause', false);
-          }
-        }, 100);
+        nextAudio.volume = 1;
+          await nextAudio.play();
+          currentAudio.pause();
+          setActiveAudio(activeAudio === 1 ? 2 : 1);
+          setIsPlaying(true);
+          toggleLoading("togglePlayPause", false);
       };
   
       return;

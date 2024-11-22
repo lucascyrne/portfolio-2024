@@ -76,7 +76,7 @@ const SoundVisualizer = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full z-10 bg-gradient-to-b from-gray-300 via-white to-white"
+      className="fixed top-0 left-0 w-full h-full bg-gradient-to-b from-gray-300 via-white to-white"
     />
   );
 };

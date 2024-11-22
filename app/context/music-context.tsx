@@ -92,7 +92,6 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const togglePlayPause = async (newSongSrc?: string) => {
-    toggleLoading('togglePlayPause', true);
   
     if (!audioInitialized) {
       console.warn('Áudio não inicializado. Inicializando...');
@@ -102,7 +101,6 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
     const { context, analyserNode } = initializeAudioContext() || {};
     if (!context || !analyserNode) {
       console.warn('AudioContext não inicializado.');
-      toggleLoading('togglePlayPause', false);
       return;
     }
   
@@ -111,7 +109,6 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
   
     if (!currentAudio || !nextAudio) {
       console.warn('Elementos de áudio não estão disponíveis.');
-      toggleLoading('togglePlayPause', false);
       return;
     }
   
@@ -148,7 +145,6 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
       setIsPlaying(true);
     }
   
-    toggleLoading('togglePlayPause', false);
   };
   
   

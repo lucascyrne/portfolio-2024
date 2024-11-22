@@ -8,7 +8,7 @@ import SideMenu from './SideMenu';
 import { useRouter } from 'next/navigation';
 
 type HeaderProps = {
-  isSecretMode: boolean;
+  isSecretMode?: boolean;
 }
 
 const Header: FC<HeaderProps> = ({

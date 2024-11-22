@@ -37,13 +37,13 @@ const Hero: FC<HeroProps> = ({
         <h5 className="text-xsm">SOFTWARE DEVELOPER & DESIGNER</h5>
         <h4 className="font-inria text-2xl italic">Reach new</h4>
         <h5 className="font-inria text-3xl font-bold -mt-4">horizons</h5>
-        <div className='flex flex-col gap-2'>
-        <PrimaryButton
-          value={"A bit of my work"}
-          icon={<Image src={DownRight} alt={"An alt caption"} />}
-          targetUrl={"/projects"}
-        />
-        <SecretButton onClick={handleSecretMode} />
+        <div className='flex flex-col items-center justify-center gap-2'>
+          <PrimaryButton
+            value={"A bit of my work"}
+            icon={<Image src={DownRight} alt={"An alt caption"} />}
+            targetUrl={"/projects"}
+          />
+          <SecretButton onClick={handleSecretMode} />
         </div>
        
       </div>

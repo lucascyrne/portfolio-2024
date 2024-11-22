@@ -13,7 +13,7 @@ const SecretButton: React.FC<SecretButtonProps> = ({ onClick }) => {
     <button
       className={`relative group border border-primary rounded-full h-12 flex items-center
         bg-transparent overflow-hidden transition-all duration-500 ease-in-out
-        ${isExpanded ? "pl-4 w-48" : "w-12 translate-x-[68px]"} bg-transparent shadow-lg
+        ${isExpanded ? "pl-4 w-48" : "w-12"} bg-transparent shadow-lg
       `}
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}

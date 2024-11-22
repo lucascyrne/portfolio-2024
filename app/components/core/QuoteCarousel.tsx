@@ -41,7 +41,7 @@ const QuoteCarousel: React.FC = () => {
 
   return (
     <div
-      className={`relative flex flex-col items-center justify-center gap-2 w-1/2 h-full -top-[100px] z-40 opacity-90 ${
+      className={`relative flex flex-col items-center justify-center gap-2 p-8 w-full md:w-1/2 md:p-0 h-full -top-[100px] z-40 opacity-90 ${
         fadeIn ? "animate-fade-in" : "animate-fade-out"
       }`}
     >

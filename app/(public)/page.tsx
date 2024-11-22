@@ -37,7 +37,7 @@ export default function Home() {
 
       {/* Camada do conteúdo principal */}
       <div className="flex flex-col w-full h-screen items-center justify-between bg-transparent">
-        <Header />
+        <Header isSecretMode={isSecretMode} />
         {isSecretMode && <SecretVideoPlayer onClose={handleVideoClose} />}
         <Hero isSecretMode={isSecretMode} setIsSecretMode={setIsSecretMode} />
         {showQuoteCarousel && <QuoteCarousel />}

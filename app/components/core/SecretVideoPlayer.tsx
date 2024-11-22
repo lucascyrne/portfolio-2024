@@ -16,7 +16,7 @@ const SecretVideoPlayer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       {/* Vídeo de fundo */}
       <video
         src="/assets/videos/portfolio-2024-video.mp4"
-        className="w-full h-full object-cover opacity-50 z-10"
+        className="w-full h-full object-cover opacity-90 z-10"
         autoPlay
         loop
         muted

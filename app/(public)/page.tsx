@@ -32,7 +32,7 @@ export default function Home() {
     <main className="flex flex-col w-full h-screen overflow-hidden">
       {/* Camada do visualizador de som */}
       <div className="absolute inset-0 pointer-events-none">
-        <SoundVisualizer />
+        <SoundVisualizer isSecretMode={isSecretMode} />
       </div>
 
       {/* Camada do conteúdo principal */}

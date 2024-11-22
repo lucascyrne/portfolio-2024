@@ -1,9 +1,15 @@
 'use client'
 
 import { useMusic } from '@/app/context/music-context';
-import { useEffect, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
 
-const SoundVisualizer = () => {
+interface SoundVisualizerProps {
+  isSecretMode: boolean;
+}
+
+const SoundVisualizer: FC<SoundVisualizerProps> = ({
+  isSecretMode
+}) => {
   const { analyser, isPlaying, audioReady } = useMusic();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -47,8 +53,18 @@ const SoundVisualizer = () => {
           dataArray[nextIndex] * factor;
   
         const barHeight = interpolatedHeight / 2;
-        const hue = 0 + (i / totalBars) * 20;
-        ctx.fillStyle = `hsl(${hue}, 80%, 55%, .5)`;
+        
+         // Ajuste de cores para o gradiente dinâmico
+         if (isSecretMode) {
+          const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+          gradient.addColorStop(0, "#000000");
+          gradient.addColorStop(0.5, "#880000"); // Tom avermelhado
+          gradient.addColorStop(1, "#FFFFFF");
+          ctx.fillStyle = gradient;
+        } else {
+          const hue = 0 + (i / totalBars) * 20;
+          ctx.fillStyle = `hsl(${hue}, 80%, 55%)`;
+        }
   
         ctx.fillRect(
           i * barWidth,
@@ -71,7 +87,7 @@ const SoundVisualizer = () => {
     return () => {
       window.removeEventListener("resize", resizeCanvas);
     };
-  }, [analyser, isPlaying]);
+  }, [analyser, isPlaying, isSecretMode]);
 
   return (
     <canvas

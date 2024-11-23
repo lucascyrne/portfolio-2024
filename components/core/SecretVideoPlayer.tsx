@@ -1,6 +1,6 @@
 'use client';
 
-import { useMusic } from '@/app/context/music-context';
+import { useMusic } from '@/resources/music/music-context';
 import { RxCross2 } from 'react-icons/rx';
 
 const SecretVideoPlayer: React.FC<{ onClose: () => void }> = ({ onClose }) => {

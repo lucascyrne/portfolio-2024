@@ -1,13 +1,13 @@
 'use client';
 
-import Footer from "@/app/components/core/Footer";
-import Header from "@/app/components/core/Header";
-import AboutMe from "@/app/components/ui/AboutMe";
+import Footer from "@/components/core/Footer";
+import Header from "@/components/core/Header";
+import AboutMe from "@/components/ui/AboutMe";
 
 const Contact = () => {
   return (
-    <div className='min-h-screen flex flex-col items-center justify-center bg-gray-100 '>
-      <Header />
+    <div className='min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-300 via-white to-white'>
+      <Header/>
 
       <AboutMe />
 

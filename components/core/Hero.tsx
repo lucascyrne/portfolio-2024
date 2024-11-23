@@ -5,7 +5,7 @@ import Image from "next/image";
 import DownRight from "/public/assets/icons/down-right.svg";
 import PrimaryButton from "../ui/PrimaryButton";
 import SecretButton from "../ui/SecretButton";
-import { useMusic } from "../../context/music-context";
+import { useMusic } from "@/resources/music/music-context";
 
 type HeroProps = {
   isSecretMode: boolean;

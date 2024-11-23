@@ -1,13 +1,13 @@
 'use client'
 
+import Footer from '@/components/core/Footer';
+import Header from '@/components/core/Header';
+import Hero from '@/components/core/Hero';
+import QuoteCarousel from '@/components/core/QuoteCarousel';
+import SecretVideoPlayer from '@/components/core/SecretVideoPlayer';
+import SoundVisualizer from '@/components/core/SoundVisualizer';
+import { useMusic } from '@/resources/music/music-context';
 import { useEffect, useState } from 'react';
-import Footer from '../components/core/Footer';
-import Header from '../components/core/Header';
-import SoundVisualizer from '../components/core/SoundVisualizer';
-import SecretVideoPlayer from '../components/core/SecretVideoPlayer';
-import Hero from '../components/core/Hero';
-import { useMusic } from '../context/music-context';
-import QuoteCarousel from '../components/core/QuoteCarousel';
 
 export default function Home() {
   const [isSecretMode, setIsSecretMode] = useState(false);
@@ -29,7 +29,7 @@ export default function Home() {
   }, [isSecretMode]);
 
   return (
-    <main className="flex flex-col w-full h-screen overflow-hidden">
+    <main className="flex flex-col w-full h-screen overflow-hidden bg-gradient-to-b from-gray-300 via-white to-white">
       {/* Camada do visualizador de som */}
       <div className="absolute inset-0 pointer-events-none">
         <SoundVisualizer isSecretMode={isSecretMode} />

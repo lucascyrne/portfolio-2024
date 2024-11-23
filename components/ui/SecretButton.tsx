@@ -1,4 +1,3 @@
-import { useMusic } from "@/app/context/music-context";
 import { useState } from "react";
 import { TfiWorld } from "react-icons/tfi";
 

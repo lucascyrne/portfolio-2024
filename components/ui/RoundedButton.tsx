@@ -1,7 +1,7 @@
 'use client';
 
-import { useMusic } from '@/app/context/music-context';
-import useButtonAnimation from '@/app/helpers/hooks/useButtonAnimation';
+import usePrimaryButtonAnimation from '@/resources/hooks/useButtonAnimation';
+import { useMusic } from '@/resources/music/music-context';
 import { FC, ReactNode, useRef } from 'react';
 import { ClipLoader } from 'react-spinners';
 
@@ -15,7 +15,7 @@ const RoundedButton: FC<RoundedButtonProps> = ({ icon, onClick, isMusic }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { loading, isPlaying, togglePlayPause } = useMusic();
 
-  useButtonAnimation({
+  usePrimaryButtonAnimation({
     buttonRef,
     hoverBgColor: '#DA5D74',
     defaultBgColor: '#B65466',

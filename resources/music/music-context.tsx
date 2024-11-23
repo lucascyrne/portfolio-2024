@@ -37,115 +37,115 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
     []
   );
 
-  const initializeAudioContext = () => {
+  const initializeAudioContext = useCallback((onReady?: () => void) => {
     if (!audioInitialized) {
       toggleLoading('initializeAudioContext', true);
-
+  
       console.log('AudioContext sendo inicializado após interação do usuário...');
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-
+  
       if (!AudioContextClass) {
         console.error('Web Audio API não suportada neste navegador.');
         return null;
       }
-
+  
       const context = new AudioContextClass();
-
+  
       if (context.state === 'suspended') {
         context.resume().then(() => console.log('AudioContext retomado com sucesso.'));
       }
-
+  
       const analyserNode = context.createAnalyser();
       analyserNode.fftSize = 256;
-
+  
       setAudioCtx(context);
       setAnalyser(analyserNode);
       setAudioInitialized(true);
-      setAudioReady(true); // Indica que o áudio está pronto
-      toggleLoading('initializeAudioContext', false)
+      setAudioReady(true);
+  
+      console.log('AudioContext e AnalyserNode inicializados.');
+      if (onReady) onReady(); // Executa callback se fornecido
+      toggleLoading('initializeAudioContext', false);
+  
       return { context, analyserNode };
     }
-
-    
+  
     return { context: audioCtx, analyserNode: analyser! };
-  };
+  }, [audioInitialized, toggleLoading, audioCtx, analyser]);
 
-  const connectAudio = (audioElement: HTMLAudioElement | null) => {
-    if (audioElement && audioCtx && analyser) {
-      if (!mediaElementSourceRef.current.has(audioElement)) {
-        toggleLoading('connectAudio', true)
-        try {
-          const source = audioCtx.createMediaElementSource(audioElement);
-          source.connect(analyser);
-          analyser.connect(audioCtx.destination);
-          mediaElementSourceRef.current.set(audioElement, source);
-          toggleLoading('connectAudio', false)
-        } catch (error) {
-          toggleLoading('connectAudio', false)
-          console.error(`Erro ao conectar áudio: ${error}`);
+  const connectAudio = useCallback(
+    (audioElement: HTMLAudioElement | null) => {
+      if (audioElement && audioCtx && analyser) {
+        if (!mediaElementSourceRef.current.has(audioElement)) {
+          toggleLoading('connectAudio', true);
+          try {
+            const source = audioCtx.createMediaElementSource(audioElement);
+            source.connect(analyser);
+            analyser.connect(audioCtx.destination);
+            mediaElementSourceRef.current.set(audioElement, source);
+            toggleLoading('connectAudio', false);
+          } catch (error) {
+            toggleLoading('connectAudio', false);
+            console.error(`Erro ao conectar áudio: ${error}`);
+          }
         }
+      } else {
+        console.warn(
+          'Não foi possível conectar o áudio. Certifique-se de que o AudioContext e AnalyserNode estão inicializados.'
+        );
       }
-    } else {
-      console.warn('Não foi possível conectar o áudio. Certifique-se de que o AudioContext e AnalyserNode estão inicializados.');
-    }
-    toggleLoading('connectAudio', false)
-  };
-
-  const togglePlayPause = async (newSongSrc?: string) => {
+    },
+    [audioCtx, analyser, toggleLoading]
+  );
   
-    if (!audioInitialized) {
-      console.warn('Áudio não inicializado. Inicializando...');
-      initializeAudioContext();
-    }
-  
-    const { context, analyserNode } = initializeAudioContext() || {};
-    if (!context || !analyserNode) {
-      console.warn('AudioContext não inicializado.');
-      return;
-    }
-  
-    const currentAudio = activeAudio === 1 ? audioRef1.current : audioRef2.current;
-    const nextAudio = activeAudio === 1 ? audioRef2.current : audioRef1.current;
-  
-    if (!currentAudio || !nextAudio) {
-      console.warn('Elementos de áudio não estão disponíveis.');
-      return;
-    }
-  
-    if (newSongSrc) {
-      // Configurar e conectar o novo áudio, se necessário
-      const nextAudioSrc = new URL(newSongSrc, window.location.origin).href;
-      if (nextAudio.src !== nextAudioSrc) {
-        nextAudio.src = nextAudioSrc;
-        nextAudio.load(); // Garante o carregamento da nova música
+  const togglePlayPause = useCallback(
+    async (newSongSrc?: string) => {
+      // Inicialize o contexto de áudio, se necessário
+      const { context, analyserNode } = initializeAudioContext() || {};
+      if (!context || !analyserNode) {
+        console.warn('AudioContext não inicializado.');
+        return;
       }
   
-      connectAudio(nextAudio);
+      const currentAudio = activeAudio === 1 ? audioRef1.current : audioRef2.current;
+      const nextAudio = activeAudio === 1 ? audioRef2.current : audioRef1.current;
   
-      // Aguarda o áudio estar pronto para tocar
-      nextAudio.oncanplay = async () => {
-        nextAudio.volume = 1;
+      if (!currentAudio || !nextAudio) {
+        console.warn('Elementos de áudio não estão disponíveis.');
+        return;
+      }
+  
+      if (newSongSrc) {
+        const nextAudioSrc = new URL(newSongSrc, window.location.origin).href;
+        if (nextAudio.src !== nextAudioSrc) {
+          nextAudio.src = nextAudioSrc;
+          nextAudio.load();
+        }
+  
+        connectAudio(nextAudio);
+  
+        nextAudio.oncanplay = async () => {
+          nextAudio.volume = 1;
           await nextAudio.play();
           currentAudio.pause();
           setActiveAudio(activeAudio === 1 ? 2 : 1);
           setIsPlaying(true);
-          toggleLoading("togglePlayPause", false);
-      };
+        };
   
-      return;
-    }
+        return;
+      }
   
-    // Lógica de play/pause para o áudio atual
-    if (isPlaying) {
-      currentAudio.pause();
-      setIsPlaying(false);
-    } else {
-      connectAudio(currentAudio);
-      await currentAudio.play();
-      setIsPlaying(true);
-    }
-  
-  };
+      if (isPlaying) {
+        currentAudio.pause();
+        setIsPlaying(false);
+      } else {
+        connectAudio(currentAudio);
+        await currentAudio.play();
+        setIsPlaying(true);
+      }
+    },
+    [initializeAudioContext, connectAudio, activeAudio, isPlaying]
+  );
   
   
   useEffect(() => {

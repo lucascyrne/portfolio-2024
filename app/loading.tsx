@@ -1,4 +1,4 @@
-import Preloader from './components/core/Preloader';
+import Preloader from "@/components/core/Preloader";
 
 const Loading = () => {
   return <Preloader />;

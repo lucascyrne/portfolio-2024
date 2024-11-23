@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { animatePageIn } from './helpers/ui/animations';
+import { animatePageIn } from '../resources/hooks/animations';
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);

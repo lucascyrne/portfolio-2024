@@ -1,9 +1,5 @@
 'use client';
 
-import Footer from '../../components/core/Footer';
-import Header from '../../components/core/Header';
-import useCustomCursor from '../../helpers/hooks/useCustomCursor';
-import useRevealText from '../../helpers/hooks/useRevealText';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
@@ -12,6 +8,10 @@ import NovoAtacarejo from '@/public/assets/icons/novo-atacarejo-logo.svg';
 import LucidDreams from '@/public/assets/icons/lucid-dreams-logo.svg';
 import GeniusLine from '@/public/assets/icons/geniusline-icon.svg';
 import Lovepay from '@/public/assets/icons/lovepay-icon.svg';
+import useCustomCursor from '@/resources/hooks/useCustomCursor';
+import useRevealText from '@/resources/hooks/useRevealText';
+import Header from '@/components/core/Header';
+import Footer from '@/components/core/Footer';
 
 const Work = () => {
   const partners = [Gowdock, NovoAtacarejo, LucidDreams, GeniusLine, Lovepay];
@@ -20,7 +20,7 @@ const Work = () => {
   useRevealText();
 
   return (
-    <main className='flex flex-col items-center justify-center min-h-screen bg-background overflow-hidden'>
+    <main className='flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-gray-300 via-white to-white overflow-hidden'>
       <Header />
       <div ref={cursorRef} className='reveal-cursor'></div>
       <section className='flex flex-col flex-grow w-full lg:h-screen'>

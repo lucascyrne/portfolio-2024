@@ -1,10 +1,10 @@
 'use client';
 
+import { MusicProvider } from '@/resources/music/music-context';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import Head from 'next/head';
 import { useEffect } from 'react';
-import { MusicProvider } from './context/music-context';
 
 const inter = Inter({ subsets: ['latin'] });
 

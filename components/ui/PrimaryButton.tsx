@@ -2,8 +2,8 @@
 
 import { FC, ReactNode, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import usePrimaryButtonAnimation from '@/app/helpers/hooks/useButtonAnimation';
-import { animatePageOut } from '@/app/helpers/ui/animations';
+import { animatePageOut } from '@/resources/hooks/animations';
+import usePrimaryButtonAnimation from '@/resources/hooks/useButtonAnimation';
 
 type PrimaryButtonProps = {
   value?: string;

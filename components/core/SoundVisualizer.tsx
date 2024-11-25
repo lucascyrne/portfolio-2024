@@ -2,6 +2,7 @@
 
 import { useMusic } from '@/resources/music/music-context';
 import { FC, useEffect, useRef } from 'react';
+import { ClipLoader } from 'react-spinners';
 
 interface SoundVisualizerProps {
   isSecretMode: boolean;
@@ -103,7 +104,14 @@ const SoundVisualizer: FC<SoundVisualizerProps> = ({ isSecretMode }) => {
   }, [audioReady, analyser, isPlaying]);
 
   if (!audioReady) {
-    return <p>Inicializando visualizador de áudio...</p>;
+    return (
+      <p className="hidden sm:flex items-center p-2 text-sm font-inria text-primary gap-2">
+        <span className="relative top-[1px]">
+          <ClipLoader size={12} color={'#B65466'} />
+        </span>
+        Inicializando visualizador de áudio...
+      </p>
+    );
   }
 
   return (

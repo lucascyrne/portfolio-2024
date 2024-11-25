@@ -20,7 +20,7 @@ const Header: FC<HeaderProps> = ({
   const openMenu = () => setIsOpen(!isOpen);
 
   return (
-    <section className='flex relative py-2 px-2 w-full bg-transparent z-40'>
+    <section className='flex relative py-2 px-2 w-full bg-transparent z-40 animate-fade-in'>
       <nav className='flex items-center justify-between w-full'>
         <span className='w-10 h-10' />
         <h3 className={`flex items-center justify-start font-semibold cursor-pointer ${isSecretMode ? 'text-white' : 'text-black'}`} onClick={() => push('/')}>

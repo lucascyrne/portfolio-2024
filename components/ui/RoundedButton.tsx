@@ -2,7 +2,9 @@
 
 import usePrimaryButtonAnimation from '@/resources/hooks/useButtonAnimation';
 import { useMusic } from '@/resources/music/music-context';
-import { FC, ReactNode, useRef } from 'react';
+import { FC, ReactNode, useEffect, useRef } from 'react';
+import { IoMdDownload } from 'react-icons/io';
+import { IoPlay } from 'react-icons/io5';
 import { ClipLoader } from 'react-spinners';
 
 type RoundedButtonProps = {
@@ -13,7 +15,13 @@ type RoundedButtonProps = {
 
 const RoundedButton: FC<RoundedButtonProps> = ({ icon, onClick, isMusic }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const { loading, isPlaying, togglePlayPause } = useMusic();
+  const {
+    loading,
+    isPlaying,
+    audioReady,
+    togglePlayPause,
+    initializeAudioContext,
+  } = useMusic();
 
   usePrimaryButtonAnimation({
     buttonRef,
@@ -21,15 +29,21 @@ const RoundedButton: FC<RoundedButtonProps> = ({ icon, onClick, isMusic }) => {
     defaultBgColor: '#B65466',
   });
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (isMusic) {
-      console.log('RoundedButton: Interagindo com o botão de música.');
-      togglePlayPause();
+      if (!audioReady) {
+        await initializeAudioContext();
+      } else {
+        togglePlayPause();
+      }
     }
-    if (onClick) {
-      onClick();
-    }
+    if (onClick) onClick();
   };
+
+  useEffect(() => {
+    // Inicializa o contexto de áudio no primeiro clique.
+    initializeAudioContext();
+  }, [initializeAudioContext]);
 
   return (
     <button
@@ -38,49 +52,64 @@ const RoundedButton: FC<RoundedButtonProps> = ({ icon, onClick, isMusic }) => {
         isMusic && isPlaying ? 'animate-wave' : ''
       }`}
       onClick={handleClick}
-    >{
-      (loading.initializeAudioContext || loading.togglePlayPause) && isMusic ? (
-        <span className='text-sm flex items-center justify-center'>
+    >
+      {loading.togglePlayPause && isMusic ? (
+        <span className="text-sm flex items-center justify-center">
           <ClipLoader size={22} />
         </span>
       ) : (
         <>
-        {isMusic ? (
-        <div
-          className={`flex relative items-center justify-center p-2 w-full h-full ${
-            isPlaying ? 'animate-wave' : ''
-          }`}
-        >
-          <svg
-            width='24'
-            height='24'
-            viewBox='0 0 24 24'
-            xmlns='http://www.w3.org/2000/svg'
-            className={'rotate-180'}
-          >
-            {[...Array(5)].map((_, index) => (
-              <rect
-                key={index}
-                className={`${isPlaying ? `bar bar${index + 1}` : ''}`}
-                x={3 + index * 4}
-                y='4'
-                width='2'
-                height={6 + index * 2}
-                fill='#000000'
-              />
-            ))}
-          </svg>
-        </div>
-      ) : (
-        icon
-      )}
+          {isMusic ? (
+            <>
+              {!audioReady ? (
+                <>
+                  <IoMdDownload size={22} />
+                </>
+              ) : (
+                <>
+                  {!isPlaying ? (
+                    <div className="relative left-[2px]">
+                      <IoPlay size={22} />
+                    </div>
+                  ) : (
+                    <>
+                      <div
+                        className={`flex relative items-center justify-center p-2 w-full h-full ${
+                          isPlaying ? 'animate-wave' : ''
+                        }`}
+                      >
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className={'rotate-180'}
+                        >
+                          {[...Array(5)].map((_, index) => (
+                            <rect
+                              key={index}
+                              className={`${isPlaying ? `bar bar${index + 1}` : ''}`}
+                              x={3 + index * 4}
+                              y="4"
+                              width="2"
+                              height={6 + index * 2}
+                              fill="#000000"
+                            />
+                          ))}
+                        </svg>
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
+            </>
+          ) : (
+            icon
+          )}
         </>
-      )
-    }
-      
+      )}
     </button>
   );
 };
-
 
 export default RoundedButton;

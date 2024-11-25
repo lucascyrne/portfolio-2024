@@ -1,9 +1,20 @@
-import { createContext, ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 type MusicContextType = {
   isPlaying: boolean;
   togglePlayPause: (newSongSrc?: string) => void;
-  audioRef: React.RefObject<HTMLAudioElement>;
+  initializeAudioContext: () => void;
+  changeTrack: (newTrackSrc: string) => void;
+  audioRef1: React.RefObject<HTMLAudioElement>;
+  audioRef2: React.RefObject<HTMLAudioElement>;
   analyser: AnalyserNode | null;
   audioReady: boolean;
   loading: Record<string, boolean>;
@@ -13,12 +24,13 @@ const initialLoadingObject = {
   initializeAudioContext: false,
   connectAudio: false,
   togglePlayPause: false,
+  changeTrack: false,
 };
 
 // Cria o contexto
 const MusicContext = createContext<MusicContextType | undefined>(undefined);
 
-export const MusicProvider = ({ children }: { children: ReactNode }) => {
+const useMusicState = () => {
   const [loading, setLoading] = useState(initialLoadingObject);
   const [audioInitialized, setAudioInitialized] = useState(false);
   const [audioReady, setAudioReady] = useState(false);
@@ -27,8 +39,11 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [analyser, setAnalyser] = useState<AnalyserNode | null>(null);
   const [activeAudio, setActiveAudio] = useState(1);
-  const [audioCtx, setAudioCtx] = useState<AudioContext | null>(null);
-  const mediaElementSourceRef = useRef<Map<HTMLAudioElement, MediaElementAudioSourceNode>>(new Map());
+  const audioCtxRef = useRef<AudioContext | null>(null);
+
+  const mediaElementSourceRef = useRef<
+    Map<HTMLAudioElement, MediaElementAudioSourceNode>
+  >(new Map());
 
   const toggleLoading = useCallback(
     (key: keyof typeof loading, state: boolean) => {
@@ -37,132 +52,187 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
     []
   );
 
-  const initializeAudioContext = useCallback((onReady?: () => void) => {
-    if (!audioInitialized) {
-      toggleLoading('initializeAudioContext', true);
-  
-      console.log('AudioContext sendo inicializado após interação do usuário...');
-      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-  
-      if (!AudioContextClass) {
-        console.error('Web Audio API não suportada neste navegador.');
-        return null;
+  const initializeAudioContext = useCallback(async () => {
+    if (audioInitialized) return;
+
+    toggleLoading('initializeAudioContext', true);
+    try {
+      const AudioContextClass =
+        window.AudioContext || (window as any).webkitAudioContext;
+      const audioCtx = new AudioContextClass();
+      audioCtxRef.current = audioCtx;
+
+      if (audioCtx.state === 'suspended') {
+        await audioCtx.resume();
       }
-  
-      const context = new AudioContextClass();
-  
-      if (context.state === 'suspended') {
-        context.resume().then(() => console.log('AudioContext retomado com sucesso.'));
-      }
-  
-      const analyserNode = context.createAnalyser();
-      analyserNode.fftSize = 256;
-  
-      setAudioCtx(context);
+
+      // Configura o AnalyserNode
+      const analyserNode = audioCtx.createAnalyser();
+      analyserNode.fftSize = 256; // Ajuste conforme necessário
       setAnalyser(analyserNode);
+
+      // Conecta o áudio ao analyser
+      const connectAudio = (audio: HTMLAudioElement | null) => {
+        if (!audio || !audioCtxRef.current || !analyserNode) return;
+
+        let source = mediaElementSourceRef.current.get(audio);
+        if (!source) {
+          source = audioCtxRef.current.createMediaElementSource(audio);
+          mediaElementSourceRef.current.set(audio, source);
+        }
+
+        source.connect(analyserNode);
+        analyserNode.connect(audioCtxRef.current.destination);
+      };
+
+      // Conectar o analyser a ambos os áudios
+      connectAudio(audioRef1.current);
+      connectAudio(audioRef2.current);
+
       setAudioInitialized(true);
       setAudioReady(true);
-  
-      console.log('AudioContext e AnalyserNode inicializados.');
-      if (onReady) onReady(); // Executa callback se fornecido
+    } finally {
       toggleLoading('initializeAudioContext', false);
-  
-      return { context, analyserNode };
     }
-  
-    return { context: audioCtx, analyserNode: analyser! };
-  }, [audioInitialized, toggleLoading, audioCtx, analyser]);
+  }, [audioInitialized]);
 
-  const connectAudio = useCallback(
-    (audioElement: HTMLAudioElement | null) => {
-      if (audioElement && audioCtx && analyser) {
-        if (!mediaElementSourceRef.current.has(audioElement)) {
-          toggleLoading('connectAudio', true);
-          try {
-            const source = audioCtx.createMediaElementSource(audioElement);
+  const changeTrack = useCallback(
+    async (newTrackSrc: string) => {
+      toggleLoading('changeTrack', true);
+      try {
+        // Pausar o áudio ativo
+        const currentAudio =
+          activeAudio === 1 ? audioRef1.current : audioRef2.current;
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0; // Opcional: resetar para o início do áudio
+        }
+
+        // Configurar e tocar o próximo áudio
+        const nextAudio =
+          activeAudio === 1 ? audioRef2.current : audioRef1.current;
+        if (!nextAudio) return;
+
+        nextAudio.src = newTrackSrc;
+        await nextAudio.load();
+        await nextAudio.play();
+
+        // Atualizar o áudio ativo
+        if (audioCtxRef.current && analyser) {
+          const source = mediaElementSourceRef.current.get(nextAudio);
+          if (source) {
             source.connect(analyser);
-            analyser.connect(audioCtx.destination);
-            mediaElementSourceRef.current.set(audioElement, source);
-            toggleLoading('connectAudio', false);
-          } catch (error) {
-            toggleLoading('connectAudio', false);
-            console.error(`Erro ao conectar áudio: ${error}`);
+            analyser.connect(audioCtxRef.current.destination);
           }
         }
-      } else {
-        console.warn(
-          'Não foi possível conectar o áudio. Certifique-se de que o AudioContext e AnalyserNode estão inicializados.'
-        );
-      }
-    },
-    [audioCtx, analyser, toggleLoading]
-  );
-  
-  const togglePlayPause = useCallback(
-    async (newSongSrc?: string) => {
-      // Inicialize o contexto de áudio, se necessário
-      const { context, analyserNode } = initializeAudioContext() || {};
-      if (!context || !analyserNode) {
-        console.warn('AudioContext não inicializado.');
-        return;
-      }
-  
-      const currentAudio = activeAudio === 1 ? audioRef1.current : audioRef2.current;
-      const nextAudio = activeAudio === 1 ? audioRef2.current : audioRef1.current;
-  
-      if (!currentAudio || !nextAudio) {
-        console.warn('Elementos de áudio não estão disponíveis.');
-        return;
-      }
-  
-      if (newSongSrc) {
-        const nextAudioSrc = new URL(newSongSrc, window.location.origin).href;
-        if (nextAudio.src !== nextAudioSrc) {
-          nextAudio.src = nextAudioSrc;
-          nextAudio.load();
-        }
-  
-        connectAudio(nextAudio);
-  
-        nextAudio.oncanplay = async () => {
-          nextAudio.volume = 1;
-          await nextAudio.play();
-          currentAudio.pause();
-          setActiveAudio(activeAudio === 1 ? 2 : 1);
-          setIsPlaying(true);
-        };
-  
-        return;
-      }
-  
-      if (isPlaying) {
-        currentAudio.pause();
-        setIsPlaying(false);
-      } else {
-        connectAudio(currentAudio);
-        await currentAudio.play();
+
+        setActiveAudio(activeAudio === 1 ? 2 : 1);
         setIsPlaying(true);
+      } finally {
+        toggleLoading('changeTrack', false);
       }
     },
-    [initializeAudioContext, connectAudio, activeAudio, isPlaying]
+    [activeAudio, analyser]
   );
-  
-  
-  useEffect(() => {
-    return () => {
-      mediaElementSourceRef.current.forEach((source) => source.disconnect());
-      analyser?.disconnect();
-      if (audioCtx?.state !== 'closed') {
-        audioCtx?.close().then(() => console.log('AudioContext fechado.'));
-      }
-    };
-  }, [audioCtx, analyser]);
+
+  const togglePlayPause = useCallback(async () => {
+    if (!audioReady) return;
+
+    const currentAudio =
+      activeAudio === 1 ? audioRef1.current : audioRef2.current;
+
+    if (isPlaying) {
+      currentAudio?.pause();
+      setIsPlaying(false);
+    } else {
+      await currentAudio?.play();
+      setIsPlaying(true);
+    }
+  }, [audioReady, activeAudio, isPlaying]);
+
+  // useEffect(() => {
+  //   const unlockAudio = () => {
+  //     if (!audioCtx || audioInitialized) return;
+
+  //     // Cria um buffer vazio
+  //     const buffer = audioCtx.createBuffer(1, 1, 22050);
+  //     const source = audioCtx.createBufferSource();
+  //     source.buffer = buffer;
+
+  //     // Conecta ao destino (alto-falantes)
+  //     source.connect(audioCtx.destination);
+
+  //     // Toca o som silencioso
+  //     source.start(0);
+
+  //     console.log('Áudio desbloqueado.');
+  //     setAudioInitialized(true);
+
+  //     // Remove o listener após desbloquear o áudio
+  //     window.removeEventListener('touchstart', unlockAudio);
+  //   };
+
+  //   window.addEventListener('touchstart', unlockAudio, false);
+
+  //   return () => {
+  //     window.removeEventListener('touchstart', unlockAudio);
+  //   };
+  // }, [audioCtx, audioInitialized]);
+
+  // useEffect(() => {
+  //   const unlockAudio = () => {
+  //     if (!audioCtx || audioInitialized) return;
+
+  //     const buffer = audioCtx.createBuffer(1, 1, 22050);
+  //     const source = audioCtx.createBufferSource();
+  //     source.buffer = buffer;
+  //     source.connect(audioCtx.destination);
+  //     source.start(0);
+
+  //     // Inicializa e conecta o AnalyserNode
+  //     const analyserNode = audioCtx.createAnalyser();
+  //     analyserNode.fftSize = 256;
+
+  //     setAnalyser(analyserNode);
+  //     setAudioInitialized(true);
+  //     setAudioReady(true);
+
+  //     console.log('AudioContext desbloqueado e AnalyserNode inicializado.');
+  //     window.removeEventListener('touchstart', unlockAudio);
+  //   };
+
+  //   window.addEventListener('touchstart', unlockAudio, false);
+
+  //   return () => {
+  //     window.removeEventListener('touchstart', unlockAudio);
+  //   };
+  // }, [audioCtx, audioInitialized]);
+
+  return {
+    isPlaying,
+    togglePlayPause,
+    audioRef1,
+    audioRef2,
+    analyser,
+    audioReady,
+    loading,
+    initializeAudioContext,
+    changeTrack,
+  };
+};
+
+export const MusicProvider = ({ children }: { children: ReactNode }) => {
+  const musicState = useMusicState();
 
   return (
-    <MusicContext.Provider value={{ isPlaying, togglePlayPause, audioRef: activeAudio === 1 ? audioRef1 : audioRef2, analyser, audioReady, loading }}>
+    <MusicContext.Provider value={musicState}>
       {children}
-      <audio ref={audioRef1} src="assets/mp3/song.mp3" loop />
-      <audio ref={audioRef2} loop />
+      <audio ref={musicState.audioRef1} src="assets/mp3/song.mp3" loop />
+      <audio
+        ref={musicState.audioRef2}
+        src="assets/mp3/portfolio-song-final.mp3"
+        loop
+      />
     </MusicContext.Provider>
   );
 };
@@ -174,5 +244,3 @@ export const useMusic = (): MusicContextType => {
   }
   return context;
 };
-
-

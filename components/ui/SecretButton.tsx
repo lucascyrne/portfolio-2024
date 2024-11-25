@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { TfiWorld } from "react-icons/tfi";
+import { useMusic } from '@/resources/music/music-context';
+import { useState } from 'react';
+import { IoMdDownload } from 'react-icons/io';
+import { TfiWorld } from 'react-icons/tfi';
+import { ClipLoader } from 'react-spinners';
 
 interface SecretButtonProps {
   onClick: () => void;
@@ -7,12 +10,13 @@ interface SecretButtonProps {
 
 const SecretButton: React.FC<SecretButtonProps> = ({ onClick }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  
+  const { loading, audioReady, changeTrack } = useMusic();
+
   return (
     <button
       className={`relative group border border-primary rounded-full h-12 flex items-center
         bg-transparent overflow-hidden transition-all duration-500 ease-in-out
-        ${isExpanded ? "pl-4 w-48" : "w-12"} bg-transparent shadow-lg
+        ${isExpanded ? 'pl-4 w-48' : 'w-12'} bg-transparent shadow-lg
       `}
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}
@@ -21,7 +25,7 @@ const SecretButton: React.FC<SecretButtonProps> = ({ onClick }) => {
       {/* Ícone centralizado no estado colapsado */}
       <span
         className={`flex items-center justify-center transition-all duration-500 ease-in-out
-          ${isExpanded ? "translate-x-0 mr-2" : "translate-x-[12px]"} text-primary
+          ${isExpanded ? 'translate-x-0 mr-2' : 'translate-x-[12px]'} text-primary
         `}
       >
         <TfiWorld className="text-lg" />
@@ -31,16 +35,14 @@ const SecretButton: React.FC<SecretButtonProps> = ({ onClick }) => {
       <span
         className={`flex items-center justify-center whitespace-nowrap font-medium
           transition-opacity duration-300 ease-in-out
-          ${isExpanded ? "opacity-100" : "opacity-0"} text-primary
+          ${isExpanded ? 'opacity-100' : 'opacity-0'} text-primary
         `}
       >
         A bit about me
       </span>
 
       {/* Animação ao clicar */}
-      <span
-        className="absolute inset-0 bg-[#ffe7eb] opacity-30 scale-0 group-active:scale-100 rounded-full transition-transform duration-50 ease-in-out z-10"
-      />
+      <span className="absolute inset-0 bg-[#ffe7eb] opacity-30 scale-0 group-active:scale-100 rounded-full transition-transform duration-50 ease-in-out z-10" />
     </button>
   );
 };

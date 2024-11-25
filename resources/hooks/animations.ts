@@ -16,8 +16,8 @@ export const animatePageIn = () => {
       .to(
         transitionElement,
         {
-          borderTopLeftRadius: '50vh',
-          borderBottomLeftRadius: '50vh',
+          // borderTopLeftRadius: '50vh',
+          // borderBottomLeftRadius: '50vh',
           duration: 1.2,
         },
         '<'
@@ -33,10 +33,10 @@ export const animatePageOut = (href: string, router: any) => {
 
     tl.set(animationWrapper, {
       xPercent: -100,
-      borderTopRightRadius: '50vh',
-      borderBottomRightRadius: '50vh',
-      borderTopLeftRadius: '0',
-      borderBottomLeftRadius: '0',
+      // borderTopRightRadius: '50vh',
+      // borderBottomRightRadius: '50vh',
+      // borderTopLeftRadius: '0',
+      // borderBottomLeftRadius: '0',
     })
       .to(animationWrapper, {
         xPercent: 0,
@@ -48,8 +48,8 @@ export const animatePageOut = (href: string, router: any) => {
       .to(
         animationWrapper,
         {
-          borderTopRightRadius: '0',
-          borderBottomRightRadius: '0',
+          // borderTopRightRadius: '0',
+          // borderBottomRightRadius: '0',
           duration: 0.8,
         },
         '<'

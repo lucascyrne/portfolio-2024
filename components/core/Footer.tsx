@@ -8,7 +8,7 @@ const FooterContact = () => {
   const { audioReady, isPlaying } = useMusic();
 
   return (
-    <section className="fixed bottom-0 left-0 py-2 px-2 w-full bg-transparent z-30">
+    <section className="fixed bottom-0 left-0 py-2 px-2 w-full bg-transparent z-50">
       <nav className="flex items-center justify-between w-full">
         <div className="flex items-center justify-self-start gap-2">
           <RoundedButton isMusic />

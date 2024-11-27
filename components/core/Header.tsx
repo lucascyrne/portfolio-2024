@@ -18,7 +18,7 @@ const Header: FC<HeaderProps> = ({ toggleMenu }) => {
 
   return (
     <section
-      className={`fixed top-0 left-0 w-full z-40 backdrop-blur-lg bg-transparent`}
+      className={`fixed top-0 left-0 w-full z-50 backdrop-blur-lg bg-transparent`}
     >
       <nav className="flex items-center justify-between py-2 px-4">
         <span className="w-10 h-10" />

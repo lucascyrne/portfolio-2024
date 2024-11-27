@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         text: '#0C0809',
         background: '#FDFCFC',
+        'primary-light': '#D98A97',
         primary: '#B65466',
         'primary-dark': '#8C3A4B',
         secondary: '#E09EAA',
@@ -29,6 +30,9 @@ const config: Config = {
         '2xl': ['2.369rem', { lineHeight: '1.5' }],
         '3xl': ['3.157rem', { lineHeight: '1.5' }],
         '4xl': ['4.209rem', { lineHeight: '1.5' }],
+      },
+      backgroundImage: {
+        'nebula-vignette': `radial-gradient(circle, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0) 100%), url('/assets/images/nebulosa.webp')`,
       },
       keyframes: {
         'fade-in': {

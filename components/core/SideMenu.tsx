@@ -17,7 +17,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, onClose }) => {
   const router = useRouter();
 
   const CloseIcon = (
-    <Image src={Close} alt={'Close Icon'} className='w-[70%] h-auto' />
+    <Image src={Close} alt={'Close Icon'} className="w-[70%] h-auto" />
   );
 
   useEffect(() => {
@@ -75,41 +75,41 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, onClose }) => {
   return (
     <div
       ref={menuRef}
-      className='fixed z-50 top-0 right-0 py-2 px-2 w-64 h-full bg-primary opacity-90 shadow-lg transform translate-x-full'
+      className="fixed z-50 top-0 right-0 py-2 px-2 w-64 h-full bg-primary opacity-90 shadow-lg transform translate-x-full"
     >
-      <div className='flex justify-end'>
+      <div className="flex justify-end mr-2">
         <RoundedButton icon={CloseIcon} onClick={onClose} />
       </div>
-      <nav className='flex flex-col items-start justify-star mt-16'>
+      <nav className="flex flex-col items-start justify-star mt-16">
         <button
-          className='flex items-start relative px-4 py-2 w-full text-xl font-normal text-white overflow-hidden hover:bg-primary-dark transition-all duration-300'
+          className="flex items-start relative px-4 py-2 w-full text-xl font-normal text-white overflow-hidden hover:bg-primary-dark transition-all duration-300"
           onClick={() => handleNavigate('/')}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <span className='relative top-1 mr-[2px] align-top text-xsm'>01</span>
-          <span className='font-inria text relative'>Home</span>
-          <span className='underline absolute left-0 bottom-0 h-[1px] w-full bg-white transform scale-x-0 origin-left'></span>
+          <span className="relative top-1 mr-[2px] align-top text-xsm">01</span>
+          <span className="font-inria text relative">Home</span>
+          <span className="underline absolute left-0 bottom-0 h-[1px] w-full bg-white transform scale-x-0 origin-left"></span>
         </button>
         <button
-          className='flex items-start relative px-4 py-2 w-full text-xl font-normal text-white overflow-hidden hover:bg-primary-dark transition-all duration-300'
+          className="flex items-start relative px-4 py-2 w-full text-xl font-normal text-white overflow-hidden hover:bg-primary-dark transition-all duration-300"
           onClick={() => handleNavigate('/projects')}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <span className='relative top-1 mr-[2px] align-top text-xsm'>02</span>
-          <span className='font-inria text relative'>Projects</span>
-          <span className='underline absolute left-0 bottom-0 h-[1px] w-full bg-white transform scale-x-0 origin-left'></span>
+          <span className="relative top-1 mr-[2px] align-top text-xsm">02</span>
+          <span className="font-inria text relative">Projects</span>
+          <span className="underline absolute left-0 bottom-0 h-[1px] w-full bg-white transform scale-x-0 origin-left"></span>
         </button>
         <button
-          className='flex items-start relative px-4 py-2 w-full text-xl font-normal text-white overflow-hidden hover:bg-primary-dark transition-all duration-300'
+          className="flex items-start relative px-4 py-2 w-full text-xl font-normal text-white overflow-hidden hover:bg-primary-dark transition-all duration-300"
           onClick={() => handleNavigate('/contact')}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <span className='relative top-1 mr-[2px] align-top text-xsm'>03</span>
-          <span className='font-inria text relative'>Contact</span>
-          <span className='underline absolute left-0 bottom-0 h-[1px] w-full bg-white transform scale-x-0 origin-left'></span>
+          <span className="relative top-1 mr-[2px] align-top text-xsm">03</span>
+          <span className="font-inria text relative">Contact</span>
+          <span className="underline absolute left-0 bottom-0 h-[1px] w-full bg-white transform scale-x-0 origin-left"></span>
         </button>
       </nav>
     </div>

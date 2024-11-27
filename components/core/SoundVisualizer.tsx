@@ -103,17 +103,6 @@ const SoundVisualizer: FC<SoundVisualizerProps> = ({ isSecretMode }) => {
     }
   }, [audioReady, analyser, isPlaying]);
 
-  if (!audioReady) {
-    return (
-      <p className="hidden sm:flex items-center p-2 text-sm font-inria text-primary gap-2">
-        <span className="relative top-[1px]">
-          <ClipLoader size={12} color={'#B65466'} />
-        </span>
-        Inicializando visualizador de áudio...
-      </p>
-    );
-  }
-
   return (
     <canvas
       ref={canvasRef}

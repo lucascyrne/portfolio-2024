@@ -64,18 +64,20 @@ const QuoteCarousel: React.FC = () => {
   const { texto, autor, obra } = quotes[currentQuoteIndex];
 
   return (
-    <div
-      className={`relative flex flex-col items-center justify-center gap-2 p-8 w-full md:w-1/2 md:p-0 h-full -top-[100px] z-40 opacity-90 ${
-        fadeIn ? 'animate-fade-in' : 'animate-fade-out'
-      }`}
-    >
-      <h1 className="font-inria text-center text-white text-shadow text-lg">
-        {texto}
-      </h1>
-      <h4 className="font-inria text-center text-white text-shadow text-md">
-        {autor} em <i className="text-primary">{obra}</i>
-      </h4>
-    </div>
+    <section className="absolute top-0 left-0 flex items-center justify-center w-full h-full">
+      <div
+        className={`relative flex flex-col items-center justify-center gap-2 p-8 w-full md:w-1/2 md:p-0 h-full z-40 opacity-90 ${
+          fadeIn ? 'animate-fade-in' : 'animate-fade-out'
+        }`}
+      >
+        <h1 className="font-inria text-center text-white text-shadow text-lg">
+          {texto}
+        </h1>
+        <h4 className="font-inria text-center text-white text-shadow text-md">
+          {autor} em <i className="text-primary">{obra}</i>
+        </h4>
+      </div>
+    </section>
   );
 };
 

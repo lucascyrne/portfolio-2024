@@ -92,7 +92,7 @@ const RecomendationsCarousel: React.FC = () => {
   const { name, role, company, text, link } = quotes[currentQuoteIndex];
 
   return (
-    <section className="flex relative items-center justify-center w-full h-1/2 z-10">
+    <section className="flex relative items-center justify-center w-full h-[720px] md:h-[480px] pt-12 z-10">
       <div
         className="absolute inset-0 z-0 bg-nebula-vignette bg-cover bg-center opacity-60 mix-blend-overlay"
         style={{ backgroundImage: "url('/assets/images/nebulosa.webp')" }}

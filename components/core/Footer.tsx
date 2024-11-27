@@ -4,7 +4,7 @@ import { useMusic } from '@/resources/music/music-context';
 import RoundedButton from '../ui/RoundedButton';
 import { ClipLoader } from 'react-spinners';
 
-const Footer = () => {
+const FooterContact = () => {
   const { audioReady, isPlaying } = useMusic();
 
   return (
@@ -36,4 +36,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default FooterContact;

@@ -44,7 +44,7 @@ const SkillAccordion = () => {
   const [visibleIndex, setVisibleIndex] = useState<null | number>(null);
 
   return (
-    <div className="flex w-full h-1/4 items-stretch justify-center overflow-hidden">
+    <div className="w-full h-auto flex flex-col md:flex-row items-stretch justify-center overflow-hidden">
       {skills.map((skill, index) => {
         const isActive = activeIndex === index; // Determina se o elemento está expandido
         const isVisible = visibleIndex === index; // Determina se o conteúdo está visível
@@ -52,16 +52,33 @@ const SkillAccordion = () => {
         return (
           <div
             key={index}
-            className={`relative flex flex-col flex-1 h-full items-center justify-center transition-all duration-500
-                ${isActive ? 'flex-[3]' : 'flex-1'}
+            className={`relative flex flex-col md:flex-1 w-full md:w-auto min-h-[160px] md:min-h-full items-center justify-center transition-all duration-500
+                ${isActive ? 'md:flex-[3] flex-[2]' : 'flex-1'}
                 bg-black/50 cursor-pointer overflow-hidden`}
+            onClick={() => {
+              if (activeIndex === index) {
+                // Fecha o item se ele já estiver ativo
+                setActiveIndex(null);
+                setVisibleIndex(null);
+              } else {
+                // Expande o item clicado
+                setActiveIndex(index);
+                setTimeout(() => setVisibleIndex(index), 500); // Aguarda a transição antes de exibir o conteúdo
+              }
+            }}
             onMouseEnter={() => {
-              setActiveIndex(index); // Define o elemento como ativo
-              setTimeout(() => setVisibleIndex(index), 500); // Aguarda a transição antes de exibir o conteúdo
+              if (window.innerWidth >= 768) {
+                // Mantém hover apenas para telas maiores
+                setActiveIndex(index);
+                setTimeout(() => setVisibleIndex(index), 500);
+              }
             }}
             onMouseLeave={() => {
-              setActiveIndex(null); // Inicia o colapso do elemento
-              if (visibleIndex === index) setVisibleIndex(null); // Esconde o conteúdo após o colapso
+              if (window.innerWidth >= 768) {
+                // Mantém o comportamento de hover apenas para desktop
+                setActiveIndex(null);
+                if (visibleIndex === index) setVisibleIndex(null);
+              }
             }}
           >
             {/* Imagem de fundo com overlay */}
@@ -78,16 +95,21 @@ const SkillAccordion = () => {
 
             {/* Conteúdo com fade-in/fade-out */}
             <div
-              className={`flex flex-col gap-2 relative z-10 text-center px-16 transition-opacity duration-500
-                  ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+              className={`flex flex-col gap-2 relative z-10 text-center px-4 md:px-16 transition-opacity duration-500`}
             >
               {/* Título */}
-              <h3 className="font-inria text-slate-300 font-semibold text-xl">
-                {skill.title}
+              <h3
+                className={`font-inria text-slate-200 font-semibold text-lg md:text-xl ${isVisible ? 'opacity-100' : 'opacity-90 pointer-events-none'}`}
+              >
+                <i>{skill.title}</i>
               </h3>
 
               {/* Descrição */}
-              <p className="text-slate-200 text-base">{skill.desc}</p>
+              <p
+                className={`text-slate-100 text-sm md:text-base ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none hidden'} animate-fade-in-xs`}
+              >
+                {skill.desc}
+              </p>
             </div>
           </div>
         );

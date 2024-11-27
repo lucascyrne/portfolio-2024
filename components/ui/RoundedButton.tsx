@@ -104,7 +104,9 @@ const RoundedButton: FC<RoundedButtonProps> = ({ icon, onClick, isMusic }) => {
               )}
             </>
           ) : (
-            icon
+            <span className="flex items-center justify-center text-white">
+              {icon}
+            </span>
           )}
         </>
       )}

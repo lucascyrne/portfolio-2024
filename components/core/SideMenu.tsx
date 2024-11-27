@@ -3,9 +3,8 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { useRouter } from 'next/navigation';
-import Close from '@/public/assets/icons/close.svg';
-import Image from 'next/image';
 import RoundedButton from '../ui/RoundedButton';
+import { IoCloseOutline } from 'react-icons/io5';
 
 type SideMenuProps = {
   isOpen: boolean;
@@ -15,10 +14,6 @@ type SideMenuProps = {
 const SideMenu: React.FC<SideMenuProps> = ({ isOpen, onClose }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-
-  const CloseIcon = (
-    <Image src={Close} alt={'Close Icon'} className="w-[70%] h-auto" />
-  );
 
   useEffect(() => {
     const menu = menuRef.current;
@@ -78,7 +73,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, onClose }) => {
       className="fixed z-50 top-0 right-0 py-2 px-2 w-64 h-full bg-primary opacity-90 shadow-lg transform translate-x-full"
     >
       <div className="flex justify-end mr-2">
-        <RoundedButton icon={CloseIcon} onClick={onClose} />
+        <RoundedButton icon={<IoCloseOutline size={24} />} onClick={onClose} />
       </div>
       <nav className="flex flex-col items-start justify-star mt-16">
         <button

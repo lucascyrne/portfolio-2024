@@ -34,7 +34,7 @@ export default function RootLayout({
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <body className="font-inter">
+      <body className="font-inter flex flex-col w-full min-h-screen">
         <MusicProvider>
           <SecretModeProvider>
             <Header toggleMenu={toggleMenu} />

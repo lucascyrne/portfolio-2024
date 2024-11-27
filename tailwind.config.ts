@@ -43,11 +43,21 @@ const config: Config = {
           '0%': { opacity: '1' },
           '100%': { opacity: '0' },
         },
+        'slide-in': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        'slide-out': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(100vw)' },
+        },
       },
       animation: {
         'fade-in': 'fade-in 1.6s ease-in-out',
         'fade-in-xs': 'fade-in 0.8s ease-in-out',
         'fade-out': 'fade-out 1.6s ease-in-out',
+        'slide-in': 'slide-in 1.2s ease-out forwards',
+        'slide-out': 'slide-out 1.2s ease-out forwards',
       },
     },
   },

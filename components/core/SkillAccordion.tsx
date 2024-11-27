@@ -52,7 +52,7 @@ const SkillAccordion = () => {
         return (
           <div
             key={index}
-            className={`relative flex flex-col md:flex-1 w-full md:w-auto min-h-[160px] md:min-h-full items-center justify-center transition-all duration-500
+            className={`relative flex flex-col md:flex-1 w-full md:w-auto min-h-[160px] md:min-h-[312px] items-center justify-center transition-all duration-500
                 ${isActive ? 'md:flex-[3] flex-[2]' : 'flex-1'}
                 bg-black/50 cursor-pointer overflow-hidden`}
             onClick={() => {

@@ -1,27 +1,40 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { animatePageIn } from '../resources/hooks/animations';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function Template({ children }: { children: React.ReactNode }) {
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    setMounted(true); // Marque o componente como montado após o primeiro render
-  }, []);
+    const transitionElement = document.getElementById('transition-element');
 
-  useEffect(() => {
-    if (mounted) {
-      animatePageIn();
+    if (!transitionElement) {
+      console.error('Elemento de transição não encontrado');
+      return;
     }
-  }, [mounted]);
+
+    // Adiciona a classe para iniciar a animação
+    transitionElement.classList.add('animate-slide-out');
+
+    // Remove o elemento após a animação (opcional)
+    const onAnimationEnd = () => {
+      transitionElement.style.display = 'none';
+    };
+    transitionElement.addEventListener('animationend', onAnimationEnd);
+
+    return () => {
+      transitionElement.removeEventListener('animationend', onAnimationEnd);
+    };
+  }, []);
 
   return (
     <div>
+      {/* Elemento de transição */}
       <div
-        id='transition-element'
-        className='w-screen h-screen bg-primary z-50 fixed top-0 left-0'
+        id="transition-element"
+        className="fixed top-0 left-0 w-screen h-screen bg-primary z-50 animate-slide-out"
       ></div>
+
+      {/* Conteúdo da página */}
       {children}
     </div>
   );

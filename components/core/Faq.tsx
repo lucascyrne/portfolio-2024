@@ -38,7 +38,7 @@ const FAQ = () => {
 
   return (
     <section className="w-full h-full px-8 py-12 bg-transparent text-slate-200">
-      <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 font-inria">
+      <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 font-inria animate-fade-in">
         Frequently Asked Questions
       </h2>
       <div className="max-w-4xl mx-auto space-y-6">

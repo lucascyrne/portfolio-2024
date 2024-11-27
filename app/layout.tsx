@@ -9,6 +9,7 @@ import Header from '@/components/core/Header';
 import SideMenu from '@/components/core/SideMenu';
 import Footer from '@/components/core/Footer';
 import { SecretModeProvider } from '@/resources/secret-mode/secret-mode-context';
+import Template from './template';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,25 +28,27 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <Head>
+      <head>
         <meta
           name="description"
           content="Horizonte studio's digital portfolio, made by Lucas Cyrne Ferreira"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+      </head>
       <body className="font-inter flex flex-col w-full min-h-screen">
-        <MusicProvider>
-          <SecretModeProvider>
-            <Header toggleMenu={toggleMenu} />
-            <SideMenu
-              isOpen={isMenuOpen}
-              onClose={() => setIsMenuOpen(false)}
-            />
-            {children}
-            <Footer />
-          </SecretModeProvider>
-        </MusicProvider>
+        <Template>
+          <MusicProvider>
+            <SecretModeProvider>
+              <Header toggleMenu={toggleMenu} />
+              <SideMenu
+                isOpen={isMenuOpen}
+                onClose={() => setIsMenuOpen(false)}
+              />
+              {children}
+              <Footer />
+            </SecretModeProvider>
+          </MusicProvider>
+        </Template>
       </body>
     </html>
   );

@@ -2,7 +2,6 @@
 
 import { FC, ReactNode, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { animatePageOut } from '@/resources/hooks/animations';
 import usePrimaryButtonAnimation from '@/resources/hooks/useButtonAnimation';
 
 type PrimaryButtonProps = {
@@ -33,13 +32,12 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
     if (onClick) {
       onClick();
     }
-    animatePageOut(targetUrl, router); // Use animatePageOut diretamente
   };
 
   return (
     <button
       ref={buttonRef}
-      className='flex items-center justify-center px-6 py-3 gap-2 bg-primary rounded-full shadow-sm hover:shadow-md'
+      className="flex items-center justify-center px-6 py-3 gap-2 bg-primary rounded-full shadow-sm hover:shadow-md"
       onClick={handleClick}
     >
       {value}

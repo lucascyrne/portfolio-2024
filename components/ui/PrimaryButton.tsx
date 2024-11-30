@@ -7,16 +7,10 @@ import usePrimaryButtonAnimation from '@/resources/hooks/useButtonAnimation';
 type PrimaryButtonProps = {
   value?: string;
   icon?: ReactNode;
-  targetUrl?: string;
-  onClick?: () => {};
+  onClick?: () => void;
 };
 
-const PrimaryButton: FC<PrimaryButtonProps> = ({
-  value,
-  icon,
-  targetUrl = '',
-  onClick,
-}) => {
+const PrimaryButton: FC<PrimaryButtonProps> = ({ value, icon, onClick }) => {
   const router = useRouter();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const iconRef = useRef<HTMLSpanElement>(null);

@@ -6,6 +6,7 @@ import DownRight from '/public/assets/icons/down-right.svg';
 import PrimaryButton from '../ui/PrimaryButton';
 import SecretButton from '../ui/SecretButton';
 import { useMusic } from '@/resources/music/music-context';
+import { useRouter } from 'next/navigation';
 
 type HeroProps = {
   isSecretMode: boolean;
@@ -13,6 +14,7 @@ type HeroProps = {
 };
 
 const Hero: FC<HeroProps> = ({ isSecretMode, setIsSecretMode }) => {
+  const { push } = useRouter();
   const { changeTrack } = useMusic();
 
   const handleSecretMode = async () => {
@@ -36,7 +38,7 @@ const Hero: FC<HeroProps> = ({ isSecretMode, setIsSecretMode }) => {
           <PrimaryButton
             value={'A bit of my work'}
             icon={<Image src={DownRight} alt={'An alt caption'} />}
-            targetUrl={'/projects'}
+            onClick={() => push('/projects')}
           />
           <SecretButton onClick={handleSecretMode} />
         </div>
